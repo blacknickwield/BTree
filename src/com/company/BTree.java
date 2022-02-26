@@ -156,6 +156,8 @@ public class BTree<T extends Comparable<T>> {
             // position i: keys[i-1] < value < keys[i]
             while (index > 0 && value.compareTo(root.keys.get(index - 1)) < 0)
                 --index;
+            // the value will be keys[i]
+            // and old keys[i] will bell keys[i+1]
             root.keys.add(index, value);
             ++root.keyNum;
             return;
@@ -165,10 +167,18 @@ public class BTree<T extends Comparable<T>> {
         while (index > 0 && value.compareTo(root.keys.get(index - 1)) < 0)
             --index;
 
-        if (root.keyNum == maxKeys) {
-            split(root, index);
-        }
+//        if (root.keyNum == maxKeys) {
+//            split(root, index);
+//        }
 
+        if (root.children.get(index).keyNum == maxKeys) {
+            split(root, index);
+            // the keys[i] will change after split
+            // so we need to choose the new position
+            if (value.compareTo(root.keys.get(index)) > 0) {
+                ++index;
+            }
+        }
         insert_node(root.children.get(index), value);
     }
 }
