@@ -69,7 +69,7 @@ public class BTree<T extends Comparable<T>> {
         }
 
         if (root.keyNum == maxKeys) {
-
+            // the new root of the B-Tree
             BNode<T> newRoot = new BNode<>();
             newRoot.isLeaf = false;
             newRoot.children.add(root);
@@ -102,7 +102,7 @@ public class BTree<T extends Comparable<T>> {
         }
 
         if (!rightChild.isLeaf) {
-            for (int i = 0; i < t - 1; ++i) {
+            for (int i = 0; i < t; ++i) {
                 rightChild.children.add(leftChild.children.get(i + t));
             }
         }
